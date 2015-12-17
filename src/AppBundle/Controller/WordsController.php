@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use AppBundle\Entity\Word;
 
 class WordsController extends Controller
 {
@@ -16,9 +17,11 @@ class WordsController extends Controller
      *           generate an output
      *
      * it generates so the route GET .../words/{id}
+     *
+     * @return Word
      */
     public function getWordAction($id)
     {
-        return array('word' => 'meaning of word');
+        return new Word("title $id", "body $id");
     }
 }
