@@ -1,0 +1,4 @@
+dico_api:
+    type:     rest
+    prefix:   /api
+    resource: "@AppBundle/Resources/config/routing.yml"

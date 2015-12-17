@@ -35,3 +35,8 @@
 
 # Composer PHAR
 /composer.phar
+
+.idea\
+.*
+
+bin/console
