@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity()
@@ -14,7 +15,7 @@ class Word
      *
      * @ORM\Id
      * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\GeneratedValue
      */
     protected $id;
 
@@ -22,6 +23,8 @@ class Word
      * @var string
      *
      * @ORM\Column(type="string")
+     * @Assert\NotBlank()
+     * @Assert\NotNull()
      */
     protected $title;
 
@@ -29,15 +32,57 @@ class Word
      * @var string
      *
      * @ORM\Column(type="string")
+     * @Assert\NotBlank()
+     * @Assert\NotNull()
      */
     protected $body;
 
-
+    /**
+     * We'll see later why $title and $body are put by default to ''
+     */
     public function __construct($title = '', $body = '')
     {
         $this->title = $title;
         $this->body = $body;
     }
 
+    /**
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
 
+    /**
+     * @param string $title
+     *
+     * @return Self
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBody()
+    {
+        return $this->body;
+    }
+
+    /**
+     * @param string $body
+     *
+     * @return Self
+     */
+    public function setBody($body)
+    {
+        $this->body = $body;
+
+        return $this;
+    }
 }
