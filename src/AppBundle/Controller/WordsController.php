@@ -55,18 +55,22 @@ class WordsController extends FOSRestController
         // that's the reason why we need to be able to create
         // an article without body or title, to use it as
         // a placeholder for the form
-        $word = new Word();
-        $errors = $this->treatAndValidateRequest($word, $request);
+        $jsonWord = json_decode($request->getContent());
+        $formWord = new Word($jsonWord->title, $jsonWord->body);
+
+        //$word = new Word();
+
+        $errors = $this->treatAndValidateRequest($formWord, $request);
         if (count($errors) > 0) {
             return new View(
                 $errors,
                 Response::HTTP_UNPROCESSABLE_ENTITY
             );
         }
-        $this->persistAndFlush($word);
+        $this->persistAndFlush($formWord);
         // created => 201, we need View here because we're not
         // returning the default 200
-        return new View($word, Response::HTTP_CREATED);
+        return new View($formWord, Response::HTTP_CREATED);
     }
 
     private function treatAndValidateRequest(Word $word, Request $request)
