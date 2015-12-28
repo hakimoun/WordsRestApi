@@ -73,6 +73,29 @@ class WordsController extends FOSRestController
         return new View($formWord, Response::HTTP_CREATED);
     }
 
+    /**
+     *
+     */
+    public function putWordsAction(Request $request)
+    {
+       //@todo should this methode return succes or fail ?
+       // yes we replace totally the old article by a new one
+       // except the id, because that's how PUT works
+       // if you just want to "merge" you want to use PATCH, not PUT
+       $jsonWord = json_decode($request->getContent());
+       $formWord = new Word($jsonWord->title, $jsonWord->body);
+
+       $errors = $this->treatAndValidateRequest($formWord, $request);
+       if (count($errors) > 0) {
+           return new View(
+              $errors,
+              Response::HTTP_UNPROCESSABLE_ENTITY
+           );
+       }
+       $this->persistAndFlush($formWord);
+       return "";
+    }
+
     private function treatAndValidateRequest(Word $word, Request $request)
     {
         // createForm is provided by the parent class
